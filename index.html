@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skale kardiologiczne — farmakoterapia (ściąga v2)</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, #0f1117 0%, #1a1f2e 100%);
+    color: #e2e8f0;
+    min-height: 100vh;
+    padding: 20px;
+    line-height: 1.5;
+  }
+  .container { max-width: 960px; margin: 0 auto; }
+  header { text-align: center; margin-bottom: 24px; }
+  h1 {
+    font-size: 1.4rem;
+    color: #7dd3fc;
+    margin-bottom: 6px;
+    letter-spacing: 0.04em;
+  }
+  .subtitle { color: #64748b; font-size: 0.85rem; }
+  .version { display: inline-block; background: #0f3460; color: #7dd3fc; padding: 2px 10px; border-radius: 10px; font-size: 0.7rem; margin-top: 6px; font-weight: 700; }
+
+  .tabs {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+  .tab {
+    padding: 8px 14px;
+    border-radius: 22px;
+    border: 1.5px solid #334155;
+    background: #1e293b;
+    cursor: pointer;
+    font-size: 0.78rem;
+    color: #94a3b8;
+    transition: all 0.2s;
+    font-weight: 700;
+    user-select: none;
+  }
+  .tab:hover {
+    border-color: #7dd3fc;
+    color: #7dd3fc;
+    transform: translateY(-1px);
+  }
+  .tab.active {
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+    border-color: #0ea5e9;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+  }
+
+  .panel {
+    display: none;
+    animation: fadeIn 0.4s ease;
+  }
+  .panel.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .scale-info {
+    background: #1e293b;
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-bottom: 18px;
+    border-left: 4px solid #0ea5e9;
+    font-size: 0.85rem;
+    color: #cbd5e1;
+  }
+  .scale-info strong { color: #7dd3fc; }
+  .scale-info table {
+    width: 100%;
+    margin-top: 10px;
+    border-collapse: collapse;
+    font-size: 0.78rem;
+  }
+  .scale-info td {
+    padding: 4px 8px;
+    border-bottom: 1px solid #334155;
+  }
+  .scale-info td:last-child {
+    text-align: right;
+    color: #7dd3fc;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .lbl {
+    font-size: 0.72rem;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .btns {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+  .btn {
+    padding: 10px 18px;
+    border-radius: 11px;
+    border: 2px solid #334155;
+    background: #1e293b;
+    cursor: pointer;
+    font-size: 0.88rem;
+    font-weight: 800;
+    transition: all 0.2s;
+    color: #cbd5e1;
+    min-width: 64px;
+    text-align: center;
+    user-select: none;
+  }
+  .btn:hover { transform: scale(1.06); }
+  .btn.g { border-color: #22c55e; color: #22c55e; }
+  .btn.g.on { background: linear-gradient(135deg, #166534 0%, #15803d 100%); color: #fff; }
+  .btn.y { border-color: #eab308; color: #eab308; }
+  .btn.y.on { background: linear-gradient(135deg, #713f12 0%, #854d0e 100%); color: #fff; }
+  .btn.o { border-color: #f97316; color: #f97316; }
+  .btn.o.on { background: linear-gradient(135deg, #7c2d12 0%, #9a3412 100%); color: #fff; }
+  .btn.r { border-color: #ef4444; color: #ef4444; }
+  .btn.r.on { background: linear-gradient(135deg, #7f1d1d 0%, #991b1b 100%); color: #fff; }
+
+  .box {
+    background: #1e293b;
+    border-radius: 14px;
+    padding: 20px;
+    border-left: 4px solid #334155;
+    min-height: 80px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  }
+  .box.g { border-left-color: #22c55e; }
+  .box.y { border-left-color: #eab308; }
+  .box.o { border-left-color: #f97316; }
+  .box.r { border-left-color: #ef4444; }
+
+  .ttl {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #f1f5f9;
+  }
+  .act {
+    color: #7dd3fc;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #334155;
+  }
+  .section-header {
+    font-size: 0.78rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 12px;
+    margin-bottom: 6px;
+    font-weight: 700;
+  }
+  .items {
+    list-style: none;
+  }
+  .items li {
+    padding: 7px 0;
+    border-bottom: 1px solid #2a3a4f;
+    font-size: 0.85rem;
+    color: #cbd5e1;
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  .items li:last-child { border-bottom: none; }
+  .items li::before {
+    content: '💊';
+    font-size: 0.78rem;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+  .items.no-icon li::before { content: '▸'; color: #7dd3fc; font-weight: 700; }
+  .tag {
+    display: inline-block;
+    background: #0f3460;
+    color: #7dd3fc;
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    margin-right: 4px;
+    white-space: nowrap;
+  }
+  .tag.a { background: #1a2e1a; color: #86efac; }
+  .tag.x { background: #3f0f0f; color: #fca5a5; }
+  .dose { color: #fbbf24; font-weight: 700; font-size: 0.8rem; }
+
+  .warn {
+    background: linear-gradient(135deg, #2a1a08 0%, #3a2410 100%);
+    border: 1px solid #f97316;
+    border-radius: 8px;
+    padding: 10px 13px;
+    margin-top: 14px;
+    font-size: 0.82rem;
+    color: #fdba74;
+  }
+  .info {
+    background: linear-gradient(135deg, #0c2340 0%, #102d4c 100%);
+    border: 1px solid #0ea5e9;
+    border-radius: 8px;
+    padding: 10px 13px;
+    margin-top: 14px;
+    font-size: 0.82rem;
+    color: #7dd3fc;
+  }
+  .pulapka {
+    background: linear-gradient(135deg, #2d1b3d 0%, #3d2554 100%);
+    border: 1px solid #a855f7;
+    border-radius: 8px;
+    padding: 10px 13px;
+    margin-top: 14px;
+    font-size: 0.82rem;
+    color: #d8b4fe;
+  }
+  .ph {
+    color: #475569;
+    text-align: center;
+    padding: 24px 12px;
+    font-size: 0.9rem;
+    font-style: italic;
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #334155;
+    color: #475569;
+    font-size: 0.78rem;
+    line-height: 1.6;
+  }
+
+  /* Mini-tabela DOAC */
+  .doac-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 0.78rem;
+    background: #0f1822;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .doac-table th {
+    background: #0f3460;
+    color: #7dd3fc;
+    padding: 6px 8px;
+    text-align: left;
+    font-weight: 700;
+  }
+  .doac-table td {
+    padding: 6px 8px;
+    border-bottom: 1px solid #2a3a4f;
+    color: #cbd5e1;
+  }
+  .doac-table tr:last-child td { border-bottom: none; }
+
+  @media (max-width: 600px) {
+    body { padding: 10px; }
+    h1 { font-size: 1.1rem; }
+    .tab { padding: 6px 10px; font-size: 0.72rem; }
+    .btn { padding: 8px 12px; font-size: 0.8rem; min-width: 52px; }
+    .box { padding: 14px; }
+    .ttl { font-size: 0.92rem; }
+    .doac-table { font-size: 0.7rem; }
+    .doac-table th, .doac-table td { padding: 5px 6px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+  <h1>🫀 Skale kardiologiczne → Farmakoterapia</h1>
+  <div class="subtitle">Interaktywna ściąga z farmakologii klinicznej</div>
+  <div class="version">v2.0 — z dawkami, kryteriami redukcji i pułapkami</div>
+</header>
+
+<div class="tabs">
+  <div class="tab active" data-tab="cha">CHA₂DS₂-VA</div>
+  <div class="tab" data-tab="hb">HAS-BLED</div>
+  <div class="tab" data-tab="ny">NYHA</div>
+  <div class="tab" data-tab="cc">CCS</div>
+  <div class="tab" data-tab="kk">Killip</div>
+  <div class="tab" data-tab="we">Wells/Genewska</div>
+  <div class="tab" data-tab="cp">Caprini</div>
+  <div class="tab" data-tab="dc">DOAC dawki</div>
+</div>
+
+<!-- CHA2DS2-VA -->
+<div class="panel active" id="tab-cha">
+  <div class="scale-info">
+    <strong>CHA₂DS₂-VA</strong> — ocena ryzyka udaru w migotaniu przedsionków (AF).
+    W wytycznych ESC 2024 usunięto literę „s" (płeć żeńska) z dawnego CHA₂DS₂-VASc.
+    <table>
+      <tr><td><b>C</b> — niewydolność serca / dysfunkcja LK</td><td>1 pkt</td></tr>
+      <tr><td><b>H</b> — nadciśnienie tętnicze</td><td>1 pkt</td></tr>
+      <tr><td><b>A₂</b> — wiek ≥75 lat</td><td>2 pkt</td></tr>
+      <tr><td><b>D</b> — cukrzyca</td><td>1 pkt</td></tr>
+      <tr><td><b>S₂</b> — udar / TIA / zator obwodowy</td><td>2 pkt</td></tr>
+      <tr><td><b>V</b> — choroba naczyniowa (MI, miażdżyca obwodowa, blaszki w aorcie)</td><td>1 pkt</td></tr>
+      <tr><td><b>A</b> — wiek 65–74 lata</td><td>1 pkt</td></tr>
+    </table>
+  </div>
+  <div class="lbl">Wybierz wynik</div>
+  <div class="btns">
+    <div class="btn g" data-s="cha" data-v="0">0 pkt</div>
+    <div class="btn y" data-s="cha" data-v="1">1 pkt</div>
+    <div class="btn r" data-s="cha" data-v="2">≥2 pkt</div>
+  </div>
+  <div class="box" id="r-cha"><div class="ph">← Kliknij wynik skali, aby zobaczyć leczenie</div></div>
+</div>
+
+<!-- HAS-BLED -->
+<div class="panel" id="tab-hb">
+  <div class="scale-info">
+    <strong>HAS-BLED</strong> — ocena ryzyka krwawienia u pacjentów na OAC.
+    Modyfikowalne czynniki: <b>RR &gt;160</b>, <b>labilny INR</b>, <b>NLPZ/leki antyagregacyjne</b>, <b>alkohol &gt;8 drinków/tydz.</b>
+    <table>
+      <tr><td><b>H</b> — nadciśnienie (SBP &gt;160 mmHg)</td><td>1 pkt</td></tr>
+      <tr><td><b>A</b> — nieprawidłowa funkcja nerek (kreat ≥2,26 mg/dl) / wątroby</td><td>1 pkt każda</td></tr>
+      <tr><td><b>S</b> — przebyty udar mózgu</td><td>1 pkt</td></tr>
+      <tr><td><b>B</b> — przebyte krwawienie / niedokrwistość / skaza krwotoczna</td><td>1 pkt</td></tr>
+      <tr><td><b>L</b> — labilny INR (TRR &lt;66%)</td><td>1 pkt</td></tr>
+      <tr><td><b>E</b> — wiek ≥65 lat</td><td>1 pkt</td></tr>
+      <tr><td><b>D</b> — leki (NLPZ, antyagregacyjne) lub alkohol (&gt;8 drinków/tydz.)</td><td>1 pkt każde</td></tr>
+    </table>
+  </div>
+  <div class="lbl">Wybierz wynik</div>
+  <div class="btns">
+    <div class="btn g" data-s="hb" data-v="0">0–2 pkt</div>
+    <div class="btn r" data-s="hb" data-v="1">≥3 pkt</div>
+  </div>
+  <div class="box" id="r-hb"><div class="ph">← Kliknij wynik skali</div></div>
+</div>
+
+<!-- NYHA -->
+<div class="panel" id="tab-ny">
+  <div class="scale-info">
+    <strong>NYHA</strong> — niewydolność serca wg nasilenia objawów.
+    Decyduje o doborze leczenia w <b>HFrEF (EF ≤40%)</b>. Cel: pełny kwartet leków u wszystkich pacjentów z HFrEF.
+    <table>
+      <tr><td><b>I</b> — bez ograniczeń aktywności (bezobjawowa dysfunkcja LK)</td><td>—</td></tr>
+      <tr><td><b>II</b> — duszność przy zwykłej aktywności</td><td>5–7 MET</td></tr>
+      <tr><td><b>III</b> — duszność przy małej aktywności (prysznic, ubieranie)</td><td>2–5 MET</td></tr>
+      <tr><td><b>IV</b> — objawy w spoczynku</td><td>&lt;2 MET</td></tr>
+    </table>
+  </div>
+  <div class="lbl">Wybierz klasę NYHA</div>
+  <div class="btns">
+    <div class="btn g" data-s="ny" data-v="1">I</div>
+    <div class="btn y" data-s="ny" data-v="2">II</div>
+    <div class="btn o" data-s="ny" data-v="3">III</div>
+    <div class="btn r" data-s="ny" data-v="4">IV</div>
+  </div>
+  <div class="box" id="r-ny"><div class="ph">← Kliknij klasę NYHA</div></div>
+</div>
+
+<!-- CCS -->
+<div class="panel" id="tab-cc">
+  <div class="scale-info">
+    <strong>CCS</strong> — Canadian Cardiovascular Society — klasyfikacja dławicy piersiowej (PZW = stabilna ChNS).
+    Każdy pacjent z PZW = <b>bardzo wysokie ryzyko CVD</b> → statyna obowiązkowa niezależnie od LDL.
+    <table>
+      <tr><td><b>I</b> — dławica tylko przy nasilonym/długotrwałym wysiłku</td><td></td></tr>
+      <tr><td><b>II</b> — niewielkie ograniczenie (szybkie chodzenie, w zimnie, po posiłku)</td><td></td></tr>
+      <tr><td><b>III</b> — znaczne ograniczenie (&lt;200 m w terenie płaskim, 1 piętro)</td><td></td></tr>
+      <tr><td><b>IV</b> — dławica spoczynkowa / przy najmniejszej aktywności</td><td></td></tr>
+    </table>
+  </div>
+  <div class="lbl">Wybierz klasę CCS</div>
+  <div class="btns">
+    <div class="btn g" data-s="cc" data-v="1">I</div>
+    <div class="btn y" data-s="cc" data-v="2">II</div>
+    <div class="btn o" data-s="cc" data-v="3">III</div>
+    <div class="btn r" data-s="cc" data-v="4">IV</div>
+  </div>
+  <div class="box" id="r-cc"><div class="ph">← Kliknij klasę CCS</div></div>
+</div>
+
+<!-- Killip -->
+<div class="panel" id="tab-kk">
+  <div class="scale-info">
+    <strong>Killip-Kimball</strong> — klasyfikacja HF wikłającej ostry zespół wieńcowy (OZW = STEMI/NSTEMI).
+    Określa stopień niewydolności serca w fazie ostrej zawału.
+    <table>
+      <tr><td><b>I</b> — bez cech HF</td><td>śmiert. ~6%</td></tr>
+      <tr><td><b>II</b> — HF: trzeszczenia nad płucami + III ton</td><td>~17%</td></tr>
+      <tr><td><b>III</b> — obrzęk płuc</td><td>~38%</td></tr>
+      <tr><td><b>IV</b> — wstrząs kardiogenny (SBP &lt;90, oliguria, sinica)</td><td>~67%</td></tr>
+    </table>
+  </div>
+  <div class="lbl">Wybierz klasę Killip</div>
+  <div class="btns">
+    <div class="btn g" data-s="kk" data-v="1">I</div>
+    <div class="btn y" data-s="kk" data-v="2">II</div>
+    <div class="btn o" data-s="kk" data-v="3">III</div>
+    <div class="btn r" data-s="kk" data-v="4">IV</div>
+  </div>
+  <div class="box" id="r-kk"><div class="ph">← Kliknij klasę Killip-Kimball</div></div>
+</div>
+
+<!-- Wells -->
+<div class="panel" id="tab-we">
+  <div class="scale-info">
+    <strong>Skala Wellsa / Genewska</strong> — ocena klinicznego prawdopodobieństwa zatorowości płucnej (PE).
+    <b>Osobna skala Wellsa istnieje dla ZŻG i PE.</b>
+    <table>
+      <tr><td colspan="2"><b>Skala Wellsa dla PE — punkty:</b></td></tr>
+      <tr><td>Wcześniejszy epizod PE/ZŻG</td><td>1</td></tr>
+      <tr><td>Czynność serca &gt;100/min</td><td>1</td></tr>
+      <tr><td>Zabieg chir./unieruchomienie &lt;4 tyg.</td><td>1</td></tr>
+      <tr><td>Aktywna choroba nowotworowa</td><td>1</td></tr>
+      <tr><td>Kliniczne objawy ZŻG</td><td>1</td></tr>
+      <tr><td>Alternatywna diagnoza mniej prawdopodobna niż PE</td><td>1</td></tr>
+      <tr><td>Krwioplucie</td><td>1</td></tr>
+      <tr><td colspan="2"><b>PE prawdopodobna: ≥2 pkt (Wells) lub ≥3 pkt (Genewska)</b></td></tr>
+    </table>
+  </div>
+  <div class="lbl">Wybierz scenariusz kliniczny</div>
+  <div class="btns">
+    <div class="btn g" data-s="we" data-v="1">PE mało prawdop.</div>
+    <div class="btn y" data-s="we" data-v="2">PE niewysokiego ryzyka</div>
+    <div class="btn r" data-s="we" data-v="3">PE wysokiego ryzyka</div>
+  </div>
+  <div class="box" id="r-we"><div class="ph">← Kliknij scenariusz</div></div>
+</div>
+
+<!-- Caprini -->
+<div class="panel" id="tab-cp">
+  <div class="scale-info">
+    <strong>Skala Capriniego</strong> — ocena ryzyka ŻChZZ u pacjentów chirurgicznych. Decyduje o doborze profilaktyki przeciwzakrzepowej okołooperacyjnej.
+    <table>
+      <tr><td><b>0 pkt</b></td><td>brak wskazań</td></tr>
+      <tr><td><b>1–2 pkt</b></td><td>tylko mechaniczna</td></tr>
+      <tr><td><b>3–4 pkt</b></td><td>farmakologiczna LUB mechaniczna</td></tr>
+      <tr><td><b>≥5 pkt</b></td><td>farmakologiczna + mechaniczna</td></tr>
+    </table>
+  </div>
+  <div class="lbl">Wybierz wynik Capriniego</div>
+  <div class="btns">
+    <div class="btn g" data-s="cp" data-v="0">0 pkt</div>
+    <div class="btn y" data-s="cp" data-v="1">1–2 pkt</div>
+    <div class="btn o" data-s="cp" data-v="2">3–4 pkt</div>
+    <div class="btn r" data-s="cp" data-v="3">≥5 pkt</div>
+  </div>
+  <div class="box" id="r-cp"><div class="ph">← Kliknij wynik</div></div>
+</div>
+
+<!-- DOAC dawki -->
+<div class="panel" id="tab-dc">
+  <div class="scale-info">
+    <strong>DOAC — dawki standardowe i zredukowane</strong> w prewencji udaru w AF.
+    Kryteria redukcji są <b>różne dla każdego leku</b> — to częsta pułapka egzaminacyjna!
+  </div>
+  <table class="doac-table">
+    <tr>
+      <th>Lek</th>
+      <th>Dawka standardowa</th>
+      <th>Dawka zredukowana</th>
+    </tr>
+    <tr>
+      <td><b>Apiksaban</b></td>
+      <td>2 × 5 mg</td>
+      <td>2 × 2,5 mg gdy ≥2 z 3:<br>≥80 lat / ≤60 kg / kreat ≥1,5 mg/dl</td>
+    </tr>
+    <tr>
+      <td><b>Riwaroksaban</b></td>
+      <td>1 × 20 mg<br>(z posiłkiem)</td>
+      <td>1 × 15 mg gdy GFR 15–49 ml/min<br>lub HAS-BLED ≥3 + antyagregacja</td>
+    </tr>
+    <tr>
+      <td><b>Dabigatran</b></td>
+      <td>2 × 150 mg</td>
+      <td>2 × 110 mg gdy:<br>≥80 lat / GFR &lt;50 /<br>HAS-BLED ≥3 + antyagregacja /<br>werapamil</td>
+    </tr>
+    <tr>
+      <td><b>Edoksaban</b></td>
+      <td>1 × 60 mg</td>
+      <td>1 × 30 mg przy kryteriach redukcji</td>
+    </tr>
+  </table>
+
+  <div class="lbl" style="margin-top: 20px;">Kliknij temat, żeby zobaczyć szczegóły</div>
+  <div class="btns">
+    <div class="btn g" data-s="dc" data-v="1">Wybór DOAC vs VKA</div>
+    <div class="btn y" data-s="dc" data-v="2">Przeciwwskazania</div>
+    <div class="btn o" data-s="dc" data-v="3">Antidota</div>
+    <div class="btn r" data-s="dc" data-v="4">Pułapki egzam.</div>
+  </div>
+  <div class="box" id="r-dc"><div class="ph">← Kliknij temat</div></div>
+</div>
+
+<footer>
+  Opracowano na podstawie materiałów z farmakologii klinicznej 2026<br>
+  Wytyczne: ESC 2021–2024 dla HF, AF, OZW, PZW; Polskie wytyczne ŻChZZ 2024/2025<br>
+  Materiał edukacyjny — nie zastępuje konsultacji lekarskiej.
+</footer>
+</div>
+
+<script>
+var DATA = {
+  cha: {
+    "0": {c:'g', t:'🟢 CHA₂DS₂-VA = 0 — Niskie ryzyko udaru', a:'NIE włączaj OAC',
+      d:[
+        'Brak wskazań do leków przeciwkrzepliwych z powodu AF',
+        'Leczenie czynników ryzyka i chorób podstawowych (NT, cukrzyca)',
+        'Skupić się na ABC: <b>A</b>nticoagulation, <b>B</b>etter symptom management, <b>C</b>ardiovascular risk optimization'
+      ],
+      w:'ASA ani klopidogrel NIE są zalecane w prewencji udaru w AF (klasa III A) — to częsty błąd!',
+      i:null,
+      p:null},
+    "1": {c:'y', t:'🟡 CHA₂DS₂-VA = 1 — Ryzyko pośrednie', a:'OAC do rozważenia (klasa IIa) — najpierw oblicz HAS-BLED i koryguj modyfikowalne czynniki ryzyka',
+      d:[
+        '<span class="tag">Apiksaban</span> <span class="dose">2 × 5 mg/dobę</span> (lub 2 × 2,5 mg przy ≥2 kryteriach redukcji)',
+        '<span class="tag">Riwaroksaban</span> <span class="dose">20 mg/dobę z posiłkiem</span> (15 mg przy GFR 15–49)',
+        '<span class="tag">Dabigatran</span> <span class="dose">2 × 150 mg/dobę</span> (2 × 110 mg gdy ≥80 lat, GFR &lt;50, werapamil, HAS-BLED ≥3)',
+        '<span class="tag">Edoksaban</span> <span class="dose">60 mg/dobę</span> (30 mg przy kryteriach redukcji)',
+        '<span class="tag a">VKA (warfaryna, acenokumarol)</span> — tylko gdy DOAC p-wskazane, cel <b>INR 2,0–3,0</b>'
+      ],
+      w:'DOAC PRZECIWWSKAZANE przy mechanicznych zastawkach serca i umiarkowanej/ciężkiej stenozie mitralnej → wtedy VKA. Dopuszczone przy bioprotezach i po TAVI.',
+      i:'Roczne ryzyko udaru: 0 pkt — 0%, 1 pkt — 1,3%, 2 pkt — 2,2%, 3 pkt — 3,2%',
+      p:null},
+    "2": {c:'r', t:'🔴 CHA₂DS₂-VA ≥ 2 — Wysokie ryzyko udaru', a:'OAC OBOWIĄZKOWE (klasa I A) — DOAC jako leki I rzutu',
+      d:[
+        '<span class="tag">Apiksaban</span> <span class="dose">2 × 5 mg/dobę</span>',
+        '<span class="tag">Riwaroksaban</span> <span class="dose">1 × 20 mg/dobę</span> z posiłkiem',
+        '<span class="tag">Dabigatran</span> <span class="dose">2 × 150 mg</span> lub 2 × 110 mg',
+        '<span class="tag">Edoksaban</span> <span class="dose">1 × 60 mg/dobę</span>',
+        '<span class="tag a">VKA</span> tylko przy mechanicznej zastawce lub stenozie mitralnej (INR 2,0–3,0; przy zastawce mech. 2,5–3,5)'
+      ],
+      w:'Wysokie HAS-BLED (≥3) NIE jest powodem do odstawienia OAC — wymaga jedynie wzmożonego monitorowania i korekty modyfikowalnych czynników krwawienia.',
+      i:'Roczne ryzyko udaru: 4 pkt — 4%, 5 pkt — 6,7%, 6 pkt — 9,8%, 7+ pkt — &gt;10%',
+      p:'Pytanie z bazy: <i>„Pacjent po PCI z AF — terapia potrójna max 4–6 mies. → potem klopidogrel + NOAC do 12 mies. → potem sam NOAC"</i>'}
+  },
+  hb: {
+    "0": {c:'g', t:'🟢 HAS-BLED 0–2 — Niskie ryzyko krwawienia', a:'Wdróż OAC zgodnie ze wskazaniem (CHA₂DS₂-VA) bez ograniczeń',
+      d:[
+        'Standardowe dawki DOAC lub VKA wg wskazań',
+        'Rutynowe kontrole: morfologia, kreatynina, funkcja wątroby co 6–12 miesięcy',
+        'Edukacja pacjenta na temat objawów krwawienia'
+      ],
+      w:null, i:null, p:null},
+    "1": {c:'r', t:'🔴 HAS-BLED ≥ 3 — Wysokie ryzyko krwawienia', a:'NIE odstawiaj OAC — koryguj modyfikowalne czynniki ryzyka!',
+      d:[
+        'Obniż RR (cel SBP &lt;160 mmHg)',
+        'Wyeliminuj NLPZ i leki antyagregacyjne (jeśli można)',
+        'Ogranicz alkohol (&lt;8 drinków/tydzień; 1 drink = 10 g etanolu w Europie)',
+        'Popraw kontrolę INR (TRR ≥66%) jeśli VKA — lub zamień na DOAC',
+        'Wyrównaj niedokrwistość (Hb &lt;13 g/l u M, &lt;12 g/l u K)',
+        'Popraw funkcję nerek (kreat &lt;2,26 mg/dl) i wątroby'
+      ],
+      w:'Wysokie HAS-BLED ≠ przeciwwskazanie do OAC. To sygnał do intensywniejszego nadzoru, nie do odstawienia antykoagulacji!',
+      i:'Modyfikowalne: NT &gt;160, labilny INR, NLPZ/antyagregacja, alkohol. Niemodyfikowalne: wiek, przebyty udar/krwawienie.',
+      p:null}
+  },
+  ny: {
+    "1": {c:'g', t:'🟢 NYHA I — Bezobjawowa dysfunkcja LK (EF ≤40%)', a:'Pełne leczenie modyfikujące przebieg choroby — mimo braku objawów',
+      d:[
+        '<span class="tag">ACE-I</span> lub <span class="tag">ARNI</span> (sakubitryl+walsartan) — preferuj ARNI [I A]',
+        '<span class="tag">Beta-bloker</span>: <b>bisoprolol, karwedilol, metoprolol bursztynian (CR), nebiwolol</b> [I A]',
+        '<span class="tag">MRA</span>: spironolakton 25 mg → 50 mg, eplerenon 25 mg → 50 mg [I A]',
+        '<span class="tag">Flozyny</span>: empagliflozyna 10 mg lub dapagliflozyna 10 mg [I A]',
+        '<span class="tag x">Diuretyki pętlowe NIE</span> — bo nie ma retencji płynów (brak duszności, obrzęków)'
+      ],
+      w:null,
+      i:'Pełny kwartet zmniejsza ryzyko progresji i zgonu nawet bez objawów. Cel: zapobiec rozwojowi objawowej HF.',
+      p:'Pytanie: <i>„55-letni pacjent po PCI, NS EF=35%, NYHA II, leczony ASA + enalapril — co dołączyć?"</i> Odpowiedź: <b>bisoprolol</b> (BB), <b>dapagliflozynę</b> (flozyna), <b>spironolakton</b> (MRA), <b>atorwastatynę</b>.'},
+    "2": {c:'y', t:'🟡 NYHA II — Łagodna objawowa HFrEF', a:'Pełny kwartet leków + stopniowe dochodzenie do dawek docelowych',
+      d:[
+        '<span class="tag">ARNI</span> (sakubitryl+walsartan) <span class="dose">2 × 49/51 mg → 2 × 97/103 mg</span>',
+        'lub <span class="tag">ACE-I</span> (ramipril 1,25–10 mg, perindopril, lizynopril) — startuj nisko, podwajaj co 2 tyg.',
+        '<span class="tag">Beta-bloker</span>: <b>bisoprolol</b> <span class="dose">1,25 mg → 10 mg</span>, karwedilol <span class="dose">3,125 mg → 25 mg 2×/d</span>',
+        '<span class="tag">MRA</span>: spironolakton lub eplerenon <span class="dose">25 mg → 50 mg</span>',
+        '<span class="tag">Flozyny</span> <span class="dose">10 mg/dobę</span> (empa- lub dapagliflozyna)',
+        '<span class="tag a">Diuretyki pętlowe</span> — TAK, przy obrzękach/duszności (furosemid, torasemid)',
+        '<span class="tag a">Iwabradyna</span> [IIa] — gdy HR ≥70/min mimo BB, rytm zatokowy, LVEF ≤35%'
+      ],
+      w:'Przed ARNI: odstaw ACE-I co najmniej 36 h wcześniej (ryzyko obrzęku naczynioruchowego). Oznacz K⁺ i eGFR. Nie rozpoczynaj jeśli K⁺ &gt;5,4 lub SBP &lt;100.',
+      i:'<b>Różnica I vs II:</b> w klasie I NIE ma diuretyków (brak retencji), w klasie II SĄ przy zastoju + można dołączyć iwabradynę.',
+      p:'Pytanie z bazy: <i>„Przed ARNI należy: odstawić ACE-I na 36 h, oznaczyć K, określić eGFR"</i> — wszystkie 3 są prawdziwe!'},
+    "3": {c:'o', t:'🟠 NYHA III — Umiarkowana/ciężka HFrEF', a:'Kwartet w maksymalnych dawkach + leki uzupełniające, opieka specjalistyczna',
+      d:[
+        '<span class="tag">ARNI/ACE-I</span> + <span class="tag">BB</span> + <span class="tag">MRA</span> + <span class="tag">Flozyny</span> w maksymalnych tolerowanych dawkach',
+        '<span class="tag a">Iwabradyna</span> [IIa B] — HR ≥70/min, rytm zatokowy, LVEF ≤35%, mimo BB',
+        '<span class="tag a">Diuretyki pętlowe</span> — często wyższe dawki, rozważ podawanie i.v.',
+        '<span class="tag a">Hydralazyna + ISDN</span> [IIa B] — u pacjentów rasy czarnej z LVEF ≤35% lub gdy nietolerancja RAAS',
+        '<span class="tag a">Werycyguat</span> [IIb B] — przy pogorszeniu HF mimo optymalnej terapii',
+        '<span class="tag a">Digoksyna</span> [IIb B] — rytm zatokowy, objawy mimo kwartetu',
+        'Implant: <b>ICD</b> (QRS &lt;130 ms) lub <b>CRT</b> (QRS ≥130 ms) jeśli LVEF ≤35%'
+      ],
+      w:'NIE włączaj BB przy aktywnej dekompensacji lub SBP &lt;90 mmHg. Najpierw uzyskaj euwolemię. Werapamil i diltiazem są PRZECIWWSKAZANE w HFrEF.',
+      i:null,
+      p:'Iwabradyna szkodliwa przy <b>EF &gt;40% bez HF</b> (klasa III B). Wstrzymaj iwabradynę przy migotaniu przedsionków (działa tylko w rytmie zatokowym).'},
+    "4": {c:'r', t:'🔴 NYHA IV — Objawy w spoczynku, schyłkowa HF', a:'Intensywna terapia szpitalna pod nadzorem specjalisty',
+      d:[
+        'Kontynuuj: <span class="tag">ARNI/ACE-I</span> + <span class="tag">MRA</span> + <span class="tag">Flozyny</span> (jeśli toleruje)',
+        '<span class="tag x">BB — p-wskazane w aktywnej dekompensacji!</span> (SBP &lt;90, świeże zaostrzenie &lt;4 tyg.)',
+        '<span class="tag">Diuretyki pętlowe i.v.</span> (furosemid 40–80 mg i.v. bolus, potem wlew)',
+        '<span class="tag a">Leki inotropowe i.v.</span> przy niskim rzucie:',
+        '<span class="tag a">  → Dobutamina</span> 2–10 µg/kg/min',
+        '<span class="tag a">  → Lewosimendan</span> 0,05–0,2 µg/kg/min',
+        'Rozważ ICD, CRT, MCS (Impella, ECMO, LVAD), przeszczep serca (HTx)'
+      ],
+      w:'BEZWZGLĘDNIE nie włączaj BB w aktywnej dekompensacji. Jeśli pacjent już je przyjmuje — zredukuj dawkę pod kontrolą specjalisty.',
+      i:null,
+      p:null}
+  },
+  cc: {
+    "1": {c:'g', t:'🟢 CCS I — Dławica tylko przy dużym wysiłku', a:'Pełna prewencja wtórna (obowiązkowa) + leczenie objawowe wg potrzeb',
+      d:[
+        '<span class="section-header">Wpływ na rokowanie (zawsze!):</span>',
+        '<span class="tag">ASA</span> <span class="dose">75–100 mg/dobę</span> [I A] (lub klopidogrel 75 mg przy nietolerancji)',
+        '<span class="tag">Statyna</span> wysokiej intensywności: <b>atorwastatyna ≥40 mg</b> lub <b>rosuwastatyna ≥20 mg</b>',
+        'Cel: <b>LDL &lt;1,4 mmol/l (55 mg/dl)</b> i ↓50% od wartości wyjściowej',
+        '<span class="tag">ACE-I</span> — przy NT, cukrzycy, EF ≤40%, PChN, dysfunkcji LV',
+        '<span class="tag a">Kolchicyna</span> 0,5 mg/dobę [IIa A] — u pacjentów z ASCVD',
+        '<span class="section-header">Objawowe:</span>',
+        '<span class="tag a">Beta-bloker</span> lub <span class="tag a">CCB-DHP</span> (amlodypina) — I linia',
+        'Nitrogliceryna podjęzykowo — doraźnie (max 3 dawki co 5 min → wezwij pogotowie)'
+      ],
+      w:null,
+      i:'Przy niewystarczającej statynie → +ezetymib (10 mg) → +inh. PCSK-9 (alirokumab/ewolokumab) lub +kwas bempediowy (180 mg)',
+      p:null},
+    "2": {c:'y', t:'🟡 CCS II — Niewielkie ograniczenie aktywności', a:'Pełna prewencja wtórna + systematyczna terapia przeciwdławicowa',
+      d:[
+        '<span class="tag">ASA</span> 75–100 mg + <span class="tag">Statyna</span> + <span class="tag">ACE-I</span> (zawsze!)',
+        '<span class="tag">Beta-bloker</span> (metoprolol, bisoprolol, atenolol) — lek I linii',
+        'lub <span class="tag">CCB-DHP</span>: amlodypina <span class="dose">5–10 mg</span>, lerkanidypina, lacidipina',
+        '<span class="tag a">Azotany długodziałające</span> (ISDN, ISMN) — przy niewystarczającej kontroli',
+        '<span class="tag a">Kolchicyna</span> 0,5 mg/dobę',
+        '<span class="tag a">Tikagrelor</span> 2 × 90 mg — można rozważyć [słabsze dowody]',
+        '<span class="tag a">+rywaroksaban 2 × 2,5 mg</span> u pacjentów wysokiego ryzyka (COMPASS)'
+      ],
+      w:'NIGDY nie łącz BB z CCB nie-DHP (werapamil, diltiazem) — ryzyko bloku przedsionkowo-komorowego i bradykardii!',
+      i:null,
+      p:'Pytanie z bazy: <i>„Czynniki ryzyka uszkodzeń PP w DAPT to: choroba wrzodowa, wiek &gt;60 lat, NLPZ, GKS — wskazane dołączenie IPP"</i>'},
+    "3": {c:'o', t:'🟠 CCS III — Znaczne ograniczenie aktywności', a:'Pełna farmakoterapia + ocena rewaskularyzacji (PCI/CABG)',
+      d:[
+        '<span class="tag">ASA</span> + <span class="tag">Statyna</span> + <span class="tag">ACE-I</span> + <span class="tag">Kolchicyna</span>',
+        '<span class="tag">Beta-bloker</span> + <span class="tag">CCB-DHP</span> (można łączyć)',
+        '<span class="tag a">Azotany długodziałające</span> (ISMN, ISDN)',
+        '<span class="tag a">Ranolazyna / Nikorandyl / Iwabradyna / Trimetazydyna</span> — leki 3. linii',
+        '<span class="tag a">DAPT po PCI</span>: ASA + klopidogrel 75 mg przez 6 mies. (3–12 mies. wg ryzyka)',
+        'Po PCI: po DAPT → sam ASA bezterminowo'
+      ],
+      w:'Iwabradyna w CCS NIE jest zalecana przy EF &gt;40% bez HF (klasa III B). Nie łącz iwabradyny z silnymi inhibitorami CYP3A4 ani werapamilem/diltiazemem.',
+      i:'Dławica naczynioskurczowa (VSA): preferowane werapamil/diltiazem, BB przeciwwskazane. Dławica mikronaczyniowa (MVA): BB preferowane.',
+      p:null},
+    "4": {c:'r', t:'🔴 CCS IV — Dławica spoczynkowa', a:'STAN NAGŁY — wyklucz OZW, hospitalizacja, pilna rewaskularyzacja',
+      d:[
+        'Pilna ocena: troponiny hs-cTn + EKG → wykluczenie OZW',
+        '<span class="tag">ASA</span> <span class="dose">150–300 mg</span> nasycająco (rozgryźć!)',
+        '<span class="tag">P2Y12</span>: tikagrelor <span class="dose">180 mg</span> lub klopidogrel <span class="dose">300–600 mg</span>',
+        '<span class="tag">Azotany i.v.</span> lub podjęzykowo przy bólu (jeśli SBP ≥90)',
+        '<span class="tag">UFH/LMWH</span> — antykoagulacja',
+        'Morfina i.v. (2 mg co 5–15 min, max 20–30 mg/24h) przy silnym bólu',
+        'Pilna koronarografia + PCI'
+      ],
+      w:'Klasa CCS IV de facto = niestabilna dławica → postępowanie jak w NSTEMI/OZW. Azotany NIE w zawale ściany dolnej, hipotonii, podejrzeniu zawału prawej komory.',
+      i:null,
+      p:null}
+  },
+  kk: {
+    "1": {c:'g', t:'🟢 Killip I — Bez cech HF w OZW', a:'Standardowe leczenie OZW — bez leków na HF',
+      d:[
+        '<span class="section-header">Przedszpitalnie:</span>',
+        '<span class="tag">ASA</span> <span class="dose">150–300 mg p.o.</span> (rozgryźć) lub i.v.',
+        '<span class="tag">UFH</span> 70–100 j./kg i.v. bolus (lub enoksaparyna 0,5 mg/kg i.v.)',
+        'Morfina i.v. 5 mg w 2 min, potem 2 mg co 5–15 min',
+        'O₂ 2–4–8 l/min <b>tylko</b> gdy SpO₂ &lt;90% (NIE rutynowo!)',
+        '<span class="section-header">W szpitalu — STEMI:</span>',
+        '<span class="tag">P2Y12</span>: tikagrelor 180 mg, prasugrel 60 mg, klopidogrel 600 mg',
+        'Pilna PCI (do 120 min od FMC) lub fibrynoliza (alteplaza) jeśli niedostępna',
+        '<span class="section-header">Po stabilizacji:</span>',
+        '<span class="tag">Beta-bloker p.o.</span> natychmiast (bisoprolol, metoprolol CR)',
+        '<span class="tag">ACE-I p.o.</span> od 1. doby (ramipril, perindopril)',
+        '<span class="tag">Statyna</span> wysokiej intensywności (atorwastatyna 80 mg)',
+        '<span class="tag">Eplerenon</span> od 3.–14. doby, jeśli LVEF ≤40% + HF lub cukrzyca'
+      ],
+      w:null,
+      i:'W NSTEMI nie zaleca się rutynowego "preloadu" P2Y12 przed poznaniem anatomii wieńcowej (wczesna strategia inwazyjna &lt;24 h). W NSTEMI fibrynoliza NIE jest stosowana.',
+      p:'Pytanie z bazy: <i>„Połączeniem bezwzględnie koniecznym jest: ASA + antagonista P2Y12 po PCI z implantacją stentu"</i> — TAK!'},
+    "2": {c:'y', t:'🟡 Killip II — HF z trzeszczeniami i III tonem', a:'Leczenie OZW + zachowawcze leczenie HF',
+      d:[
+        '<span class="tag">Diuretyki pętlowe i.v.</span> furosemid 20–40 mg i.v. — przy zastoju',
+        '<span class="tag">ACE-I</span> lub ARB — po stabilizacji ciśnienia',
+        '<span class="tag a">Beta-bloker</span> — OSTROŻNIE, dopiero po ustąpieniu zastoju (euwolemia)',
+        'Tlenoterapia przy SpO₂ &lt;90%',
+        'Pełna terapia OZW (DAPT, antykoagulacja, statyna)',
+        'Pilna PCI jak w klasie I'
+      ],
+      w:'Nie włączaj BB przy aktywnym zastoju — najpierw uzyskaj euwolemię, dopiero potem stopniowo wprowadzaj. Diuretyk wstępnie nie poprawia rokowania, jest objawowy.',
+      i:null,
+      p:null},
+    "3": {c:'o', t:'🟠 Killip III — Obrzęk płuc', a:'Intensywne leczenie ostrej HF + pilna rewaskularyzacja',
+      d:[
+        '<span class="tag">Diuretyki pętlowe i.v.</span> furosemid w dużych dawkach (40–80 mg bolus + wlew)',
+        '<span class="tag">Azotany i.v.</span> przy SBP ≥90 mmHg (redukują obciążenie wstępne)',
+        'Wentylacja wspomagana <b>CPAP/BiPAP</b> przy SpO₂ &lt;90% mimo tlenu',
+        'Pilna koronarografia + PCI',
+        'Morfina — rozważyć ostrożnie (zmniejsza niepokój, dyspnoe)',
+        'Rozważ leki inotropowe jeśli niski rzut'
+      ],
+      w:'Beta-blokery i ACE-I ODŁÓŻ — nie podawaj w aktywnym obrzęku płuc!',
+      i:null,
+      p:null},
+    "4": {c:'r', t:'🔴 Killip IV — Wstrząs kardiogenny (SBP <90 mmHg)', a:'ZAGROŻENIE ŻYCIA — pilna PCI + wsparcie krążenia',
+      d:[
+        '<span class="tag">Noradrenalina i.v.</span> — wazopresor I wyboru przy głębokiej hipotonii',
+        '<span class="tag">Dobutamina i.v.</span> 2–10 µg/kg/min — lek inotropowy z wyboru',
+        '<span class="tag a">Lewosimendan i.v.</span> — alternatywa inotropowa (sensybilizator wapniowy)',
+        'Mechaniczne wspomaganie krążenia: <b>IABP, Impella, ECMO, LVAD</b>',
+        'Pilna koronarografia + PCI',
+        'Antykoagulacja UFH'
+      ],
+      w:'BEZWZGLĘDNIE unikaj BB, ACE-I i diuretyków w pełnym wstrząsie — pogłębiają hipotensję i hipoperfuzję!',
+      i:null,
+      p:null}
+  },
+  we: {
+    "1": {c:'g', t:'🟢 PE/ZŻG mało prawdopodobne (Wells <2)', a:'D-dimer → jeśli ujemny, wyklucz PE; jeśli dodatni → angio-CT',
+      d:[
+        'Negatywny D-dimer + niskie prawdopodobieństwo → PE wykluczona',
+        'Dodatni D-dimer → wykonaj angio-CT klatki piersiowej',
+        'Bez PE → leczenie objawowe i wyszukiwanie innej diagnozy'
+      ],
+      w:null,
+      i:'Skala Wellsa dla PE: ≥2 pkt = prawdopodobne. Skala Genewska: ≥3 pkt = prawdopodobne.',
+      p:null},
+    "2": {c:'y', t:'🟡 PE niewysokiego ryzyka zgonu', a:'Leczenie przeciwkrzepliwe — wybierz JEDEN lek',
+      d:[
+        '<span class="section-header">Leczenie wstępne (5–21 dni):</span>',
+        '<span class="tag">Enoksaparyna</span> <span class="dose">2 × 1 mg/kg s.c.</span> lub 1 × 1,5 mg/kg s.c.',
+        '<span class="tag">Dalteparyna</span> <span class="dose">2 × 100 IU/kg</span> lub 1 × 200 IU/kg s.c.',
+        '<span class="tag">Nadroparyna</span> <span class="dose">2 × 86 IU/kg</span> lub 1 × 171 IU/kg s.c.',
+        '<span class="tag a">Rywaroksaban</span> 2 × 15 mg przez 3 tyg., potem 20 mg/dobę (start od razu, bez heparyny!)',
+        '<span class="tag a">Apiksaban</span> 2 × 10 mg przez 7 dni, potem 2 × 5 mg (start od razu!)',
+        '<span class="tag x">Dabigatran</span> — wymaga 5–10 dni heparyny <b>przed</b> włączeniem!',
+        '<span class="section-header">Leczenie podstawowe (3–6 mies.):</span>',
+        'NOAC preferowany, alternatywnie LMWH lub VKA (INR 2,0–3,0)',
+        'Pacjenci onkologiczni: NOAC lub LMWH (gdy PLT &gt;50 tys.)'
+      ],
+      w:'Pamiętaj: rywaroksaban i apiksaban można włączyć OD RAZU. Dabigatran i edoksaban WYMAGAJĄ poprzedzenia heparyną 5–10 dni. To częsta pułapka!',
+      i:'Profilaktyka wtórna: po pierwszym epizodzie samoistnej ŻChZZ można rozważyć ASA 100 mg/dobę zamiast OAC (redukcja nawrotu ~30%).',
+      p:'Pytanie z bazy: <i>„Wskaż możliwe leczenie początkowe ZŻG"</i> — prawidłowe: rywaroksaban monoter., dalteparyna lecz., enoksaparyna + dabigatran. <b>Błędne:</b> dabigatran monoter., nadroparyna w dawce profilaktycznej.'},
+    "3": {c:'r', t:'🔴 PE wysokiego ryzyka zgonu (wstrząs lub hipotonia)', a:'NATYCHMIASTOWA tromboliza systemowa',
+      d:[
+        '<span class="tag">UFH i.v.</span> bolus <span class="dose">80 j./kg</span>, potem wlew <span class="dose">18 j./kg/h</span>',
+        '<span class="section-header">Tromboliza:</span>',
+        '<span class="tag">Alteplaza (rt-PA)</span> 0,6 mg/kg w 15 min (max 50 mg) lub 100 mg w 2 h',
+        '<span class="tag">Streptokinaza</span> 250 000 IU w 30 min, potem 100 000 IU/h przez 24 h',
+        '<span class="tag">Urokinaza</span> 4 400 IU/kg w 10 min, potem 4 400 IU/kg/h przez 24 h',
+        '<span class="section-header">Przy p-wskazaniach do trombolizy:</span>',
+        'Trombektomia chirurgiczna lub przezcewnikowa',
+        '<span class="section-header">Leczenie wstrząsu:</span>',
+        'Tlenoterapia, leki wazopresyjne (noradrenalina), płynoterapia ostrożna'
+      ],
+      w:'Przeciwwskazania bezwzględne do trombolizy: udar krwotoczny kiedykolwiek, udar niedokrwienny &lt;6 mies., guz OUN, uraz/operacja &lt;3 tyg., krwawienie z PP &lt;1 mies., skaza, rozwarstwienie aorty.',
+      i:null,
+      p:null}
+  },
+  cp: {
+    "0": {c:'g', t:'🟢 Caprini 0 pkt — Brak ryzyka', a:'Brak wskazań do profilaktyki',
+      d:['Pacjenci młodzi, krótkie zabiegi, brak czynników ryzyka', 'Wystarczy wczesne uruchomienie po zabiegu'],
+      w:null, i:null, p:null},
+    "1": {c:'y', t:'🟡 Caprini 1–2 pkt — Niskie ryzyko', a:'Tylko profilaktyka mechaniczna',
+      d:[
+        '<span class="tag">PUP</span> (przerywany ucisk pneumatyczny) — preferowane (optymalnie 18 h/dobę)',
+        '<span class="tag">PSU</span> (pończochy o stopniowanym ucisku) — alternatywa',
+        'Wczesne uruchomienie'
+      ],
+      w:null, i:null, p:null},
+    "2": {c:'o', t:'🟠 Caprini 3–4 pkt — Umiarkowane ryzyko', a:'Farmakoprofilaktyka LUB profilaktyka mechaniczna',
+      d:[
+        '<span class="tag">LMWH</span> w dawce profilaktycznej, start <b>12 h przed operacją</b>:',
+        '  → Enoksaparyna <span class="dose">20–40 mg s.c.</span> (BMI &lt;40 → 30 mg; 40–49 → 40 mg)',
+        '  → Dalteparyna <span class="dose">2500–5000 j.</span>',
+        '  → Nadroparyna <span class="dose">2850–5700 j.</span>',
+        '<span class="tag a">UFH</span> 5000 j. i.v. — 1–2 h przed operacją, potem co 8 h',
+        '<span class="tag a">Fondaparynuks lub NOAC</span> — pierwsza dawka po zabiegu',
+        'Czas: 4–14 dni po zabiegu lub do uruchomienia'
+      ],
+      w:'U otyłych, z niewydolnością nerek i ciężarnych: monitoruj anty-Xa 4 h po iniekcji. Dawka LMWH u ciężarnych — wg masy ciała PRZED ciążą.',
+      i:null, p:null},
+    "3": {c:'r', t:'🔴 Caprini ≥5 pkt — Wysokie ryzyko', a:'Farmakoprofilaktyka + profilaktyka mechaniczna',
+      d:[
+        'Pełna farmakoprofilaktyka LMWH (jak wyżej) + PUP/PSU',
+        '<span class="section-header">Wydłużenie profilaktyki:</span>',
+        'Endoprotezoplastyka stawu biodrowego → <b>35 dni</b>',
+        'Pacjent z nowotworem złośliwym → <b>4 tygodnie</b>',
+        'Operacje brzuszne onkologiczne → 4 tygodnie'
+      ],
+      w:null, i:null, p:null}
+  },
+  dc: {
+    "1": {c:'g', t:'🟢 Wybór DOAC vs VKA', a:'Kiedy wybrać który lek przeciwkrzepliwy w AF',
+      d:[
+        '<span class="section-header">DOAC (NOAC) — leki I rzutu:</span>',
+        'Standardowe AF bez mechanicznej zastawki / istotnej stenozy mitralnej',
+        'Wybór konkretnego DOAC zależy od:',
+        '  → funkcji nerek (eGFR)',
+        '  → choroby nowotworowej',
+        '  → leków towarzyszących (CYP3A4, P-gp)',
+        'Preferencja ksabanów nad gatranami (mniejsze ryzyko krwawień z PP)',
+        '<span class="section-header">VKA (warfaryna, acenokumarol):</span>',
+        '<b>Tylko</b> przy mechanicznej zastawce serca',
+        '<b>Tylko</b> przy umiarkowanej/ciężkiej stenozie mitralnej',
+        'Zespół antyfosfolipidowy (potrójnie dodatni)',
+        'Cel INR: <b>2,0–3,0</b> (przy zastawce mech.: 2,5–3,5)'
+      ],
+      w:null,
+      i:'NOAC dopuszczone przy bioprotezach i po TAVI. Wcześniejsze 3-miesięczne ograniczenie po TAVI zniesione.',
+      p:null},
+    "2": {c:'y', t:'🟡 Przeciwwskazania do DOAC', a:'Kiedy nie wolno stosować poszczególnych leków',
+      d:[
+        '<span class="section-header">Dabigatran p-wskazany przy:</span>',
+        '  → GFR &lt;30 ml/min',
+        '  → Ciężkich chorobach wątroby',
+        '  → Leczeniu azolami, cyklosporyną, dronedaronem',
+        '<span class="section-header">Riwaroksaban p-wskazany przy:</span>',
+        '  → GFR &lt;15 ml/min',
+        '  → Child-Pugh B/C, koagulopatii wątrobowej',
+        '  → Silnych inhibitorach CYP3A4 i P-gp (inhibitory proteazy HIV)',
+        '<span class="section-header">Apiksaban p-wskazany przy:</span>',
+        '  → GFR &lt;15 ml/min',
+        '  → Ciężkich chorobach wątroby, koagulopatii',
+        '  → Silnych inhibitorach CYP3A4 i P-gp',
+        '<span class="section-header">Wszystkie DOAC:</span>',
+        '  → Mechaniczne zastawki serca [klasa III]',
+        '  → Umiarkowana/ciężka stenoza mitralna [klasa III]',
+        '  → Ciąża, karmienie piersią'
+      ],
+      w:null, i:null, p:null},
+    "3": {c:'o', t:'🟠 Antidota — odwracanie działania', a:'Co podać w przypadku krwawienia lub pilnej operacji',
+      d:[
+        '<span class="tag">Idarucyzumab</span> — odwraca <b>dabigatran</b> (5 g i.v., efekt po kilku minutach)',
+        '<span class="tag">Andeksanet alfa</span> — odwraca ksabany (riwaroksaban, apiksaban, edoksaban) + LMWH, fondaparynuks',
+        '<span class="tag">Siarczan protaminy</span> — odwraca <b>UFH (100%)</b> i LMWH (częściowo)',
+        '<span class="tag">Witamina K</span> + PCC lub FFP — odwraca VKA',
+        '<span class="tag a">Ciraparantag</span> — w trakcie badań (uniwersalny — wszystkie inh. Xa + heparyny)',
+        '<span class="section-header">Plan pilnego zabiegu:</span>',
+        'DOAC: przerwa 5 × T1/2 przed wysokiego ryzyka, 24 h po',
+        'VKA: odstaw warfarynę 5 dni przed, acenokumarol 3 dni',
+        'Pilny zabieg + INR ≥1,5 → witamina K + PCC'
+      ],
+      w:'Pomostowa terapia heparyną NIE jest rutynowa! U 90% pacjentów z VKA nie przynosi korzyści i zwiększa ryzyko krwawień 2,5–5x. Tylko u bardzo wysokiego ryzyka zakrzepicy.',
+      i:null, p:null},
+    "4": {c:'r', t:'🔴 Pułapki egzaminacyjne — DOAC i antykoagulacja', a:'Najczęstsze błędy w pytaniach testowych',
+      d:[
+        '<b>1.</b> ASA i klopidogrel NIE są zalecane w prewencji udaru w AF [III A]',
+        '<b>2.</b> Wysokie HAS-BLED ≠ przeciwwskazanie do OAC — koryguj modyfikowalne czynniki',
+        '<b>3.</b> Dabigatran w monoterapii ŻChZZ <b>BŁĄD</b> — wymaga heparyny 5–10 dni',
+        '<b>4.</b> Rywaroksaban i apiksaban w ŻChZZ <b>można od razu</b> (bez heparyny)',
+        '<b>5.</b> DOAC p-wskazane: mech. zastawka + ciężka stenoza mitralna',
+        '<b>6.</b> Pacjent ze stenozą mitralną + AF → <b>warfaryna</b>, nie DOAC',
+        '<b>7.</b> Profilaktyka u kobiety w ciąży z ŻChZZ → <b>LMWH</b> (NOAC, VKA zakazane)',
+        '<b>8.</b> Pacjent po PCI + AF → terapia potrójna max 4–6 mies. → klopidogrel+NOAC do 12 mies. → potem sam NOAC',
+        '<b>9.</b> Pacjent na OAC + ŻChZZ → terapia jak w ŻChZZ, OAC sam wystarcza, NIE dokładaj antyagregacji',
+        '<b>10.</b> Pacjenci onkologiczni z ŻChZZ: NOAC OK <b>oprócz</b> nieoperacyjnych guzów GI/GU (krwawienie), PLT &lt;50 tys., niedawnego krwawienia'
+      ],
+      w:'PAMIĘTAJ: <b>CHA₂DS₂-VA</b> (bez „s") to nowa skala wg ESC 2024. Stara „CHA₂DS₂-VASc" jest jeszcze w niektórych podręcznikach — pytania mogą być na obu wersjach.',
+      i:null, p:null}
+  }
+};
+
+// Tabs
+document.querySelectorAll('.tab').forEach(function(t) {
+  t.addEventListener('click', function() {
+    document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active');});
+    document.querySelectorAll('.panel').forEach(function(x){x.classList.remove('active');});
+    t.classList.add('active');
+    document.getElementById('tab-' + t.dataset.tab).classList.add('active');
+  });
+});
+
+// Score buttons
+document.querySelectorAll('.btn').forEach(function(b) {
+  b.addEventListener('click', function() {
+    var s = b.dataset.s;
+    var v = b.dataset.v;
+    b.parentElement.querySelectorAll('.btn').forEach(function(x){x.classList.remove('on');});
+    b.classList.add('on');
+    var d = DATA[s][v];
+    var box = document.getElementById('r-' + s);
+    box.className = 'box ' + d.c;
+    var html = '<div class="ttl">' + d.t + '</div>';
+    html += '<div class="act">' + d.a + '</div>';
+    html += '<ul class="items">';
+    for (var i = 0; i < d.d.length; i++) {
+      html += '<li>' + d.d[i] + '</li>';
+    }
+    html += '</ul>';
+    if (d.w) html += '<div class="warn">⚠️ ' + d.w + '</div>';
+    if (d.i) html += '<div class="info">ℹ️ ' + d.i + '</div>';
+    if (d.p) html += '<div class="pulapka">🎯 <b>Pułapka egzam.:</b> ' + d.p + '</div>';
+    box.innerHTML = html;
+  });
+});
+</script>
+</body>
+</html>
