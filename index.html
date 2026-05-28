@@ -479,7 +479,7 @@
 <header>
   <h1>🫀 Kardiologia — Farmakoterapia</h1>
   <div class="subtitle">Interaktywna ściąga z farmakologii klinicznej</div>
-  <div class="version">v4.0 — skale + kardiowersja + pełne schematy leczenia</div>
+  <div class="version">v4.1 — aktualizacja: terapia potrójna AF+PCI wg ESC 2023/2024</div>
 </header>
 
 <div class="legend-help">
@@ -859,6 +859,11 @@
     <span class="icon">🛡️</span>
     <div class="name">Profilaktyka ŻChZZ</div>
     <div class="desc">Okołooperacyjna</div>
+  </div>
+  <div class="disease-card" data-disease="trojna">
+    <span class="icon">⚕️</span>
+    <div class="name">AF + PCI<span class="new-badge">NEW</span></div>
+    <div class="desc">Terapia potrójna/podwójna</div>
   </div>
 </div>
 
@@ -1553,6 +1558,103 @@
   <div class="pulapka">🎯 Pomostowa terapia heparyną u pacjentów na VKA: <b>NIE rutynowo</b>. Tylko przy bardzo wysokim ryzyku zakrzepicy. U 90% pacjentów nie przynosi korzyści i zwiększa krwawienia 2,5–5x.</div>
 </div>
 
+<!-- Terapia potrójna AF + PCI -->
+<div class="schema-content" id="schema-trojna">
+  <div class="schema-box urgent">
+    <div class="schema-title">⚕️ AF + PCI — Terapia potrójna i podwójna</div>
+    <p style="font-size:0.85rem;color:#cbd5e1;line-height:1.5;">Najtrudniejsza decyzja w kardiologii: pacjent ma AF (potrzebuje OAC) <b>i</b> stent (potrzebuje DAPT). Trzy leki naraz = duże ryzyko krwawienia!</p>
+  </div>
+
+  <div class="schema-box warning">
+    <div class="schema-title">⚠️ UWAGA: Wytyczne ewoluowały — różne wersje krążą w materiałach!</div>
+    <p style="font-size:0.85rem;color:#fdba74;line-height:1.6;">To bardzo świeża zmiana. Wytyczne ESC ewoluowały: <b>2014–2016</b> (6 mies. potrójnej) → <b>2017–2020</b> (1 mies.) → <b>ESC 2023/2024</b> (≤1 tydzień jako standard). Niektóre polskie skrypty z 2024/2025 nadal podają starsze wartości (4–6 mies.) — warto znać OBYDWA podejścia, żeby nie pomylić się na egzaminie!</p>
+  </div>
+
+  <div class="schema-box good">
+    <div class="schema-title">⭐ ESC 2023 (ACS) i ESC 2024 (AF) — AKTUALNY standard</div>
+    <div class="schema-step">
+      <div class="step-title"><span class="step-num">1</span>Tydzień 1: Terapia POTRÓJNA</div>
+      <div class="step-content"><ul>
+        <li><span class="tag">ASA</span> 75-100 mg/d + <span class="tag">Klopidogrel</span> 75 mg/d + <span class="tag">NOAC</span></li>
+        <li>Czas: <b>≤7 dni</b> (default strategy)</li>
+        <li>NOAC preferowany nad VKA</li>
+      </ul></div>
+    </div>
+    <div class="schema-step">
+      <div class="step-title"><span class="step-num">2</span>Tydzień 2 – miesiąc 12: Terapia PODWÓJNA</div>
+      <div class="step-content"><ul>
+        <li><span class="tag">Klopidogrel</span> 75 mg/d + <span class="tag">NOAC</span> (preferowany nad ASA)</li>
+        <li>Klopidogrel preferowany nad tikagrelor/prasugrel w połączeniu z OAC</li>
+      </ul></div>
+    </div>
+    <div class="schema-step">
+      <div class="step-title"><span class="step-num">3</span>Po 12 miesiącach: NOAC monoterapia</div>
+      <div class="step-content"><ul>
+        <li>Sam <span class="tag">NOAC</span> bezterminowo</li>
+        <li>Odstawienie antyagregacji [klasa I A]</li>
+        <li>Badania: AFIRE, OAC-ALONE — potwierdziły bezpieczeństwo monoterapii OAC</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="schema-box warning">
+    <div class="schema-title">🔴 Wyjątek: WYSOKIE ryzyko niedokrwienne</div>
+    <div class="step-content"><ul>
+      <li>Przedłużenie terapii potrójnej do <b>1 miesiąca</b> [IIa C]</li>
+      <li>Kryteria wysokiego ryzyka niedokrwiennego:</li>
+      <li>&nbsp;&nbsp;→ Trójnaczyniowa choroba wieńcowa</li>
+      <li>&nbsp;&nbsp;→ Wiele stentów / długie stenty (&gt;60 mm)</li>
+      <li>&nbsp;&nbsp;→ Stent na lewym pniu lub bifurkacji</li>
+      <li>&nbsp;&nbsp;→ Wcześniejsza zakrzepica w stencie</li>
+      <li>&nbsp;&nbsp;→ Cukrzyca + PChN</li>
+    </ul></div>
+  </div>
+
+  <div class="schema-box">
+    <div class="schema-title">📚 Starsze wytyczne (do których odnoszą się niektóre skrypty)</div>
+    <p style="font-size:0.82rem;color:#94a3b8;line-height:1.5;margin-bottom:8px;">Niektóre polskie podręczniki nadal podają schemat z wcześniejszych wytycznych. Jeśli Twój egzamin opiera się na tych materiałach, możesz spotkać:</p>
+    <div class="step-content"><ul>
+      <li>Terapia potrójna: <b>4–6 miesięcy</b></li>
+      <li>Następnie klopidogrel + NOAC do 12 miesięcy</li>
+      <li>Potem sam NOAC</li>
+    </ul></div>
+  </div>
+
+  <div class="schema-box good">
+    <div class="schema-title">💡 Dlaczego krócej = lepiej?</div>
+    <p style="font-size:0.85rem;color:#cbd5e1;line-height:1.6;">W migotaniu przedsionków zakrzepy tworzą się w lewym przedsionku i są <b>bogate w fibrynę</b> (nie w płytki). Dlatego OAC (działający na układ krzepnięcia) chroni skuteczniej przed udarem niż antyagregacja. Z kolei zakrzepy w stencie po PCI są bogate w płytki — tu DAPT ma sens, ale tylko w pierwszych tygodniach, gdy stent jeszcze się "wgaja" w naczynie.</p>
+    <p style="font-size:0.85rem;color:#cbd5e1;line-height:1.6;margin-top:8px;">Badania (PIONEER-AF, RE-DUAL PCI, AUGUSTUS, ENTRUST-AF-PCI) konsekwentnie pokazały, że krótsza terapia potrójna = mniej krwawień bez wzrostu zdarzeń niedokrwiennych.</p>
+  </div>
+
+  <div class="schema-box">
+    <div class="schema-title">🔀 Sytuacje szczególne</div>
+    <div class="schema-step">
+      <div class="step-title">Pacjent przewlekle na NOAC → OZW + PCI</div>
+      <div class="step-content"><ul>
+        <li>Stosuj standardowy schemat (≤1 tydzień potrójnej → 12 mies. podwójnej → sam NOAC)</li>
+        <li>NOAC w dawce <b>profilaktycznej</b> (niższej testowanej dla prewencji udaru w AF)</li>
+      </ul></div>
+    </div>
+    <div class="schema-step">
+      <div class="step-title">Pacjent po PCI (bez OZW) → później AF</div>
+      <div class="step-content"><ul>
+        <li><b>BEZ terapii potrójnej!</b></li>
+        <li>Od razu: klopidogrel + NOAC max 12 mies. → sam NOAC</li>
+      </ul></div>
+    </div>
+    <div class="schema-step">
+      <div class="step-title">Pacjent na ASA w prewencji pierwotnej → rozwija AF</div>
+      <div class="step-content"><ul>
+        <li>Zmieniasz ASA na NOAC (nie łączysz!)</li>
+        <li>ASA już niepotrzebne</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="warn">⚠️ Wszyscy pacjenci na terapii potrójnej / podwójnej z OAC <b>powinni dostawać IPP</b> [klasa I A] — zmniejsza krwawienia z PP o ~45%.</div>
+  <div class="pulapka">🎯 Bezpieczna odpowiedź na egzaminie: <i>"Terapia potrójna jak najkrócej — zgodnie z najnowszymi wytycznymi ESC ≤1 tydzień (do 1 miesiąca przy wysokim ryzyku niedokrwiennym), następnie terapia podwójna (klopidogrel + NOAC) do 12 miesięcy, potem sam NOAC."</i> Pokazujesz aktualną wiedzę i znajomość zasad.</div>
+</div>
+
 </div><!-- KONIEC mode-schematy -->
 
 <footer>
@@ -1593,7 +1695,7 @@ var DATA = {
       ],
       w:'Wysokie HAS-BLED (≥3) NIE jest powodem do odstawienia OAC — wymaga jedynie wzmożonego monitorowania i korekty modyfikowalnych czynników krwawienia.',
       i:'Roczne ryzyko udaru: 4 pkt — 4%, 5 pkt — 6,7%, 6 pkt — 9,8%, 7+ pkt — &gt;10%',
-      p:'Pacjent po PCI z AF — terapia potrójna max 4–6 mies. → potem klopidogrel + NOAC do 12 mies. → potem sam NOAC'}
+      p:'<b>Terapia potrójna po PCI z AF — różne wytyczne!</b><br><br>📌 <b>ESC 2023/2024 (najnowsze):</b> terapia potrójna <b>≤1 tydzień</b> → klopidogrel + NOAC do 12 mies. → sam NOAC<br>📌 <b>Wcześniejsze + niektóre materiały uczelni:</b> 4–6 mies. terapii potrójnej → klopidogrel + NOAC do 12 mies. → sam NOAC<br>📌 <b>Wysokie ryzyko niedokrwienne</b> (np. ryzyko zakrzepicy stentu): do 1 mies. [IIa C]<br><br>💡 Mechanizm krótszej terapii: w AF zakrzepy w naczyniach wieńcowych są bogate w fibrynę (nie w płytki) → OAC chroni skuteczniej niż antyagregacja'}
   },
   hb: {
     "0": {c:'g', t:'🟢 HAS-BLED 0–2 — Niskie ryzyko krwawienia', a:'Wdróż OAC zgodnie ze wskazaniem (CHA₂DS₂-VA) bez ograniczeń',
@@ -1855,7 +1957,7 @@ var DATA = {
         '<b>4.</b> Rywaroksaban i apiksaban w ŻChZZ <b>można od razu</b>',
         '<b>5.</b> DOAC p-wskazane: mech. zastawka + ciężka stenoza mitralna',
         '<b>6.</b> Ciężarne z ŻChZZ → <b>LMWH</b> (NOAC, VKA zakazane)',
-        '<b>7.</b> Po PCI + AF → terapia potrójna max 4–6 mies. → klopidogrel+NOAC → sam NOAC',
+        '<b>7.</b> Po PCI + AF → ESC 2023/24: terapia potrójna ≤1 tydz. → klopidogrel+NOAC do 12 mies. → sam NOAC (starsze wytyczne: 4-6 mies. terapii potrójnej)',
         '<b>8.</b> OAC + ŻChZZ → OAC sam wystarcza, NIE dokładaj antyagregacji',
         '<b>9.</b> Onkologia z ŻChZZ: NOAC OK oprócz guzów GI/GU, PLT &lt;50 tys.'
       ],
